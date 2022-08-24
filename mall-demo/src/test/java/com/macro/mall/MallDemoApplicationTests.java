@@ -1,6 +1,7 @@
 package com.macro.mall;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.macro.mall.demo.MallDemoApplication;
 import com.macro.mall.model.PmsProduct;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+@SpringBootTest(classes = MallDemoApplication.class)
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
 public class MallDemoApplicationTests {
 	private Logger logger = LoggerFactory.getLogger(MallDemoApplicationTests.class);
 	@Test
@@ -28,4 +34,16 @@ public class MallDemoApplicationTests {
 		logger.error(mapper.writeValueAsString(product));
 	}
 
+	@Test
+	public void sda() {
+		Stream<List<Integer>> inputStream = Stream.of(
+				Arrays.asList(1),
+				Arrays.asList(2, 3),
+				Arrays.asList(4, 5, 6)
+		);
+		Stream<Integer> outputStream = inputStream.
+				flatMap((childList) -> childList.stream());
+		Stream<Integer> i = outputStream;
+
+	}
 }
