@@ -1,0 +1,42 @@
+我的文件助手 12:12:22
+@startuml
+start
+
+partition 参数校验：
+if(若请求为空)then(yes)
+    :返回9003;
+    end
+endif
+
+if(若请求的extensionInfo最多传1024个键值对，键的长度最大32位)then(yes)
+    :否则返回9006;
+    end
+endif
+
+if(若account为空并且fundAccount为空)then(yes)
+    :返回9002;
+    end
+endif
+}
+
+partition 先查redis缓存
+if(若account、fundAccount、payType都存在)then(yes)
+    :key="pmt_fund_" + account + "_" + payType + "_" + fundAccount;
+elseif(若account、payType不为空，fundAccount为空)then(yes)
+    :key="pmt_fund_" + account + "_" + payType;
+elseif(若fundAccount、payType不为空，account为空)then(yes)
+    :key="pmt_fund_" + payType + "_" + fundAccount;
+else(no)
+    :不查缓存;
+endif
+}
+if(若缓存查不到，查库)then(yes)
+    :查绑定支付账号表;
+    :查绑定支付账号扩展表;
+endif
+:转换对象后，返回响应;
+end
+
+
+@enduml
+
