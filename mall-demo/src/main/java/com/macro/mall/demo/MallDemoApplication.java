@@ -7,5 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MallDemoApplication{
 	public static void main(String[] args) {
 		SpringApplication.run(MallDemoApplication.class, args);
+		System.out.println(123);
+		System.out.println("test1");
 	}
 }
